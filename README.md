@@ -20,11 +20,10 @@ Data:
 
 5.Modularidade do programa 
 
-     A fim de permitir uma maior clareza ao programa, o mesmo foi modularizado da seguinte forma: main.c, implementacao.c, protótipo.h e
-     estruturas.h.
-     Na main.c encontramos a função main que faz a chamada ao métodos e funções implementadas pelo ARQUIVO A. ...
-     No prototipo.h, encontramos todos os protótipos de funções que serão implementadas em implementacao.c. E em estuturas.h encontra-se todas 
-     as estruturas de dados criadas para atender a necessidade deste programa.
+  A fim de permitir uma maior clareza ao programa, o mesmo foi modularizado da seguinte forma: main.c, implementacao.c, protótipo.h e
+  estruturas.h.
+  Na main.c encontramos a função main que faz a chamada ao métodos e funções implementadas pelo ARQUIVO A. ...
+  No prototipo.h, encontramos todos os protótipos de funções que serão implementadas em implementacao.c. E em estuturas.h encontra-se     todas as estruturas de dados criadas para atender a necessidade deste programa.
 
 6.Interface usuário 
 
