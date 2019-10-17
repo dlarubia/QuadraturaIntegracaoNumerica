@@ -13,13 +13,16 @@ Autores: Daniel La Rubia e Paula Macedo
 int main () {
 	int opcao;
 	
-	printf("Problema da Quadratura numérica\n\n \
-			Selecione a opção desejada:\n \
-			1 - Compreenda o problema\n \
-			2 - Sobre a implementação\n \
-			3 - Execução do Programa implementado de forma Sequencial\n \
-			4 - Execução do Programa implementado de forma Concorrente\n \
-			5 - Descrição do Trabalho\n");
+	printf(" |--------------------------------------------------------------------|\n \
+|                Problema da Quadratura numérica                     |\n \
+|                                                                    |\n \
+| Selecione a opção desejada:                                        |\n \
+|     1 - Compreenda o problema                                      |\n \
+|     2 - Sobre a implementação                                      |\n \
+|     3 - Execução do Programa implementado de forma Sequencial      |\n \
+|     4 - Execução do Programa implementado de forma Concorrente     |\n \
+|     5 - Descrição do Trabalho                                      |\n \
+|--------------------------------------------------------------------|\n");
 	scanf("%d", &opcao);
 	
 	do {
@@ -78,8 +81,6 @@ int main () {
 				break;
 		}
 	} while (opcao != 9);
-
-
 
 	return 0;
 }
