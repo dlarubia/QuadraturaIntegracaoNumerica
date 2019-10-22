@@ -66,10 +66,23 @@ double g(double x) {
 double integralPontoMedio(double (*f)(double), double a, double b, int iteracoes) {
     double passo = (b - a) / iteracoes;
     double integral = 0;
-    for(int i = 0; i < iteracoes; i++) {
+    for(int i = 1; i <= iteracoes; i++) {
         integral += passo * f(a + (i - 1) * passo);
     }
 
     return integral;
 }
 
+/*
+// Método do Leo
+double integralPontoMedio2(double (*f)(double), double a, double b, int iteracoes) {
+    double passo = (b - a) / iteracoes;
+    double integral = 0;
+    for(int i = a; i <= (b - passo); i++) {
+        integral += f(i + passo);
+    }
+
+    return passo * integral;
+}
+
+*/
