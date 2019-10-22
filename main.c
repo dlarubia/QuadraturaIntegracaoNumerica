@@ -32,7 +32,23 @@ int main () {
 			case 0:
 			//TODO
 				printf("MENU PRINCIPAL \n 1\n 2\n 3\n 4\n 5\n");
-				printf("VALOR INTEGRAL MÉTODO DANIEL: %f\n", integralPontoMedio(a, 1, 2, 4));
+				printf("INTEGRAL COM RECURSIVIDADE: %f", integralPontoMedioRecursivo(a, 1, 2, 0));
+				printf("VALOR INTEGRAL a(x): %f\n", integralPontoMedio(a, 1, 2, 1000));
+				printf("VALOR INTEGRAL b(x): %f\n", integralPontoMedio(b, 1, 2, 4));
+				printf("VALOR INTEGRAL c(x): %f\n", integralPontoMedio(c, 1, 2, 4));
+				printf("VALOR INTEGRAL d(x): %f\n", integralPontoMedio(d, 1, 2, 4));
+				printf("VALOR INTEGRAL e(x): %f\n", integralPontoMedio(e, 1, 2, 4));
+				printf("VALOR INTEGRAL f(x): %f\n", integralPontoMedio(f, 1, 2, 4));
+				printf("VALOR INTEGRAL g(x): %f\n", integralPontoMedio(g, 1, 2, 4));
+				printf("\nALO LEO ------------------------------ \n");
+				printf("VALOR INTEGRAL a(x): %f\n", integralPontoMedio2(a, -2, 2, 4));
+				printf("VALOR INTEGRAL b(x): %f\n", integralPontoMedio2(b, 1, 2, 4));
+				printf("VALOR INTEGRAL c(x): %f\n", integralPontoMedio2(c, 1, 2, 4));
+				printf("VALOR INTEGRAL d(x): %f\n", integralPontoMedio2(d, 1, 2, 4));
+				printf("VALOR INTEGRAL e(x): %f\n", integralPontoMedio2(e, 1, 2, 4));
+				printf("VALOR INTEGRAL f(x): %f\n", integralPontoMedio2(f, 1, 2, 4));
+				printf("VALOR INTEGRAL g(x): %f\n", integralPontoMedio2(g, 1, 2, 4));
+
 				//printf("VALOR INTEGRAL MÉTODO LEO: %f\n", integralPontoMedio2(a, 1, 2, 4));
 				scanf("%d", &opcao);
 				break;
