@@ -73,16 +73,27 @@ double integralPontoMedio(double (*f)(double), double a, double b, int iteracoes
     return integral;
 }
 
-/*
+
 // Método do Leo
 double integralPontoMedio2(double (*f)(double), double a, double b, int iteracoes) {
     double passo = (b - a) / iteracoes;
     double integral = 0;
-    for(int i = a; i <= (b - passo); i++) {
-        integral += f(i + passo);
+    for(double i = a; i <= (b - passo); i+= passo) {
+        integral += f(i + passo/2.0);
     }
 
     return passo * integral;
 }
 
-*/
+double integralPontoMedioRecursivo(double (*f)(double), double a, double b, double erroMaximo) {
+    double pontoMedio = (a + b)/2.0;
+    double areaMaior = (b - a) * f(pontoMedio);
+    double retanguloL = ((pontoMedio - a) * f(pontoMedio));
+    double retanguloR = ((b - pontoMedio) * f(pontoMedio));
+    double erro = areaMaior - (retanguloL + retanguloR);
+
+    if(erro <= erroMaximo) return areaMaior;
+    else return integralPontoMedio(f, a, (a + b)/2.0, erroMaximo) + integralPontoMedio(f, (b + a)/2.0, b, erroMaximo);
+
+}
+
