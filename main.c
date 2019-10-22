@@ -32,6 +32,8 @@ int main () {
 			case 0:
 			//TODO
 				printf("MENU PRINCIPAL \n 1\n 2\n 3\n 4\n 5\n");
+				printf("VALOR INTEGRAL MÉTODO DANIEL: %f\n", integralPontoMedio(a, 1, 2, 4));
+				//printf("VALOR INTEGRAL MÉTODO LEO: %f\n", integralPontoMedio2(a, 1, 2, 4));
 				scanf("%d", &opcao);
 				break;
 			
