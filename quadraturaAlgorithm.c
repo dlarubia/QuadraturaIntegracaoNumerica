@@ -92,7 +92,7 @@ double integralPontoMedioRecursivo(double (*f)(double), double a, double b, doub
     double retanguloR = ((b - pontoMedio) * f(pontoMedio));
     double erro = areaMaior - (retanguloL + retanguloR);
 
-    if(erro <= erroMaximo) return areaMaior;
+    if(abs(erro) <= erroMaximo) return areaMaior;
     else return integralPontoMedio(f, a, (a + b)/2.0, erroMaximo) + integralPontoMedio(f, (b + a)/2.0, b, erroMaximo);
 
 }
