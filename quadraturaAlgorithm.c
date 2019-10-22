@@ -73,5 +73,3 @@ double integralPontoMedio(double (*f)(double), double a, double b, int iteracoes
     return integral;
 }
 
-double calculaErro(int n);
-
