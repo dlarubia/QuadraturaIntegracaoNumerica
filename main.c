@@ -31,6 +31,7 @@ int main () {
 			
 			case 0:
 			//TODO
+				printf("MENU PRINCIPAL \n 1\n 2\n 3\n 4\n 5\n");
 				scanf("%d", &opcao);
 				break;
 			
