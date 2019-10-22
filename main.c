@@ -9,6 +9,7 @@ Autores: Daniel La Rubia e Paula Macedo
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "quadraturaAlgorithm.c"
 
 int main () {
 	int opcao;
@@ -30,7 +31,6 @@ int main () {
 			
 			case 0:
 			//TODO
-				printf("MENU PRINCIPAL \n 1\n 2\n 3\n 4\n 5\n");
 				scanf("%d", &opcao);
 				break;
 			
