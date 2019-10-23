@@ -16,4 +16,4 @@ double f(double x);
 
 double g(double x);
 
-double integralPontoMedioRecursivo(double (*f)(double), double a, double b, double erroMaximo);
+double integralPontoMedio(double (*f)(double), double a, double b, double erroMaximo);
