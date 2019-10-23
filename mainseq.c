@@ -6,10 +6,13 @@ Descrição: Implementação da versão sequencial do programa que utiliza o mé
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "func.c"
 
 int main (int argc, char** argv){
 
+// Variável para armazenar tempo
+	clock_t tempo;
 // O usuário deverá informar na linha de comando o intervalo [a,b] e o erro máximo e
 	if(argc!=4) {
 		puts("Entre com intervalo [a, b] e o erro na seguinte formatação : ./nome_programa a b e");
@@ -20,15 +23,16 @@ int main (int argc, char** argv){
 	float intervaloB = atof(argv[2]);
 	float erroMax = atof(argv[3]);
 	
-
-	printf("VALOR INTEGRAL a(x): %f\n", integralPontoMedio(a, intervaloA, intervaloB, erroMax));
-	printf("VALOR INTEGRAL b(x): %f\n", integralPontoMedio(b, intervaloA, intervaloB, erroMax));
-	printf("VALOR INTEGRAL c(x): %f\n", integralPontoMedio(c, intervaloA, intervaloB, erroMax));
-	printf("VALOR INTEGRAL d(x): %f\n", integralPontoMedio(d, intervaloA, intervaloB, erroMax));
-	printf("VALOR INTEGRAL e(x): %f\n", integralPontoMedio(e, intervaloA, intervaloB, erroMax));
-	printf("VALOR INTEGRAL f(x): %f\n", integralPontoMedio(f, intervaloA, intervaloB, erroMax));
-	printf("VALOR INTEGRAL g(x): %f\n", integralPontoMedio(g, intervaloA, intervaloB, erroMax));
-
+	tempo = clock();
+	printf("VALOR INTEGRAL a(x): %lf\n", integralPontoMedio(a, intervaloA, intervaloB, erroMax));
+	printf("VALOR INTEGRAL b(x): %lf\n", integralPontoMedio(b, intervaloA, intervaloB, erroMax));
+	printf("VALOR INTEGRAL c(x): %lf\n", integralPontoMedio(c, intervaloA, intervaloB, erroMax));
+	printf("VALOR INTEGRAL d(x): %lf\n", integralPontoMedio(d, intervaloA, intervaloB, erroMax));
+	printf("VALOR INTEGRAL e(x): %lf\n", integralPontoMedio(e, intervaloA, intervaloB, erroMax));
+	printf("VALOR INTEGRAL f(x): %lf\n", integralPontoMedio(f, intervaloA, intervaloB, erroMax));
+	printf("VALOR INTEGRAL g(x): %lf\n", integralPontoMedio(g, intervaloA, intervaloB, erroMax));
+	t = clock() - t;
+	printf("Tempo de execução: %lf", ((double)tempo)/((CLOCKS_PER_SEC/1000)))
 	return 0;
 
 }
