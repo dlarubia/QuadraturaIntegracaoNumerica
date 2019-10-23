@@ -1,8 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "func.h"
+#include "func.h" //declaração do protótipo das funções implementadas abaixo
 
+/***
+	Conjunto de funções a serem calculadas durante o programa
+  
+	a(x) = 1 + x
+	b(x) = sqrt(1 - x²), -1 < x < 1
+	c(x) = sqrt(1 + x⁴)
+	d(x) = sen(x²)
+	f(x) = cos(e^-x)
+	g(x) = cos(e^-x) * x
+	h(x) = cos(e^-x) * (0.005 * x³ + 1)
+***/
 
 double a(double x) {
     return 1 + x;
@@ -33,8 +44,10 @@ double g(double x) {
 }
 
 
-
-
+/***
+	Calcula a integral de uma função f(x) pelo método de integração numérica retangular. 
+	A função é implementada de forma recursiva
+***/
 
 double integralPontoMedio(double (*f)(double), double a, double b, double erroMaximo) {
     double pontoMedio = (a + b)/2.0;

@@ -1,4 +1,4 @@
-
+/* Protótipos das funções a serem implementadas em func.c */
 
 #define euler M_PI
 

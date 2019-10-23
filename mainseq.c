@@ -1,7 +1,7 @@
 /*** Trabalho 1 - Versão Principal programa sequencial
 Autores: Daniel La Rubia e Paula Macedo
 Data: 15/10/2019
-Descrição: Implementação da versão sequencial do programa que utiliza o método de integração numérica retangular(ponto médio).
+Descrição: Implementação da versão sequencial do programa que utiliza o método de integração numérica retangular(ponto médio). Calcula o resultado da integral para um determinado conjunto de casos e retorna o tempo de execução do programa em milissegundos.
  ***/
 
 #include <stdio.h>
@@ -9,21 +9,25 @@ Descrição: Implementação da versão sequencial do programa que utiliza o mé
 #include <time.h>
 #include "func.c"
 
+
 int main (int argc, char** argv){
 
-// Variável para armazenar tempo
-	clock_t tempo;
+// Variável para armazenar o tempo de execução 
+	clock_t tempo; 
+
 // O usuário deverá informar na linha de comando o intervalo [a,b] e o erro máximo e
+// Se não for passado o número correto de parâmetros, o programa se encerra
 	if(argc!=4) {
-		puts("Entre com intervalo [a, b] e o erro na seguinte formatação : ./nome_programa a b e");
+		puts("Entre com intervalo [a, b] e o erro máximo tolerado na seguinte formatação : ./nome_programa a b e");
 		return 1;
 	}
-// Variáveis do programa
+// Variáveis do programa. Converte a string passada pela linha de comando para float
 	float intervaloA = atof(argv[1]);
 	float intervaloB = atof(argv[2]);
 	float erroMax = atof(argv[3]);
 	
-	tempo = clock();
+	tempo = clock(); 
+//Calcula e imprime o resultado da integral pelo método do ponto médio
 	printf("VALOR INTEGRAL a(x): %lf\n", integralPontoMedio(a, intervaloA, intervaloB, erroMax));
 	printf("VALOR INTEGRAL b(x): %lf\n", integralPontoMedio(b, intervaloA, intervaloB, erroMax));
 	printf("VALOR INTEGRAL c(x): %lf\n", integralPontoMedio(c, intervaloA, intervaloB, erroMax));
@@ -31,8 +35,11 @@ int main (int argc, char** argv){
 	printf("VALOR INTEGRAL e(x): %lf\n", integralPontoMedio(e, intervaloA, intervaloB, erroMax));
 	printf("VALOR INTEGRAL f(x): %lf\n", integralPontoMedio(f, intervaloA, intervaloB, erroMax));
 	printf("VALOR INTEGRAL g(x): %lf\n", integralPontoMedio(g, intervaloA, intervaloB, erroMax));
-	t = clock() - t;
-	printf("Tempo de execução: %lf", ((double)tempo)/((CLOCKS_PER_SEC/1000)))
+
+	// Faz tempo final menos inicial para achar o tempo de execução do programa
+	tempo = clock() - tempo; 
+	printf("Tempo de execucao: %lf milissegundos \n", ((double)tempo)/((CLOCKS_PER_SEC/1000)));
+
 	return 0;
 
 }
