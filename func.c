@@ -36,7 +36,7 @@ double g(double x) {
 
 
 
-double integralPontoMedioRecursivo(double (*f)(double), double a, double b, double erroMaximo) {
+double integralPontoMedio(double (*f)(double), double a, double b, double erroMaximo) {
     double pontoMedio = (a + b)/2.0;
     double areaMaior = (b - a) * f(pontoMedio);
     double retanguloL = ((pontoMedio - a) * f(pontoMedio));
