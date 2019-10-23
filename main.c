@@ -11,7 +11,7 @@ Autores: Daniel La Rubia e Paula Macedo
 #include <stdlib.h>
 #include "quadraturaAlgorithm.c"
 #include "funcoes.c"
-#include "controleThreads.c"
+//#include "controleThreads.c"
 
 int main () {
 	int opcao;
