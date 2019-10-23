@@ -8,7 +8,7 @@ Descrição: Implementação da versão sequencial do programa que utiliza o mé
 #include <stdlib.h>
 #include "func.c"
 
-int main (int c, char** argv){
+int main (int argc, char** argv){
 
 // O usuário deverá informar na linha de comando o intervalo [a,b] e o erro máximo e
 	if(argc!=4) {
