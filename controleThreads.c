@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include "quadraturaAlgorithm.c"
 
 pthread_t *tid_sistema;
 int nthreads = 0, t, *tid;
