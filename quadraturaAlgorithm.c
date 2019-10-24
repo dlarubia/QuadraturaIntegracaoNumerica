@@ -20,6 +20,29 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
+
+#define N 1024
+
+typedef struct Dados {
+    double a;
+    double b;
+    double (*f)(double);
+} Dados;
+
+Dados Buffer[N];
+double erroMaximo, valorIntegral = 0;
+int posicao;
+pthread_mutex_t mutex, mutex1, mutex2, mutex3, mutex4;
+
+Dados inicializaRetangulo(double a, double b, double (*f)(double)) {
+    Dados retangulo;
+    retangulo.a = a;
+    retangulo.b = b;
+    retangulo.f = f;
+
+    return retangulo;
+}
 
 //TODO: Próximo passo é deixar de receber o parametro iteracoes e passar a controlar o término da função através do erro. Eliminar o for e tornar recursivo
 double integralPontoMedio(double (*f)(double), double a, double b, int iteracoes) {
@@ -31,7 +54,6 @@ double integralPontoMedio(double (*f)(double), double a, double b, int iteracoes
 
     return integral;
 }
-
 
 // Método do Leo
 double integralPontoMedio2(double (*f)(double), double a, double b, int iteracoes) {
@@ -53,6 +75,60 @@ double integralPontoMedioRecursivo(double (*f)(double), double a, double b, doub
 
     if(abs(erro) <= erroMaximo) return areaMaior;
     else return integralPontoMedio(f, a, (a + b)/2.0, erroMaximo) + integralPontoMedio(f, (b + a)/2.0, b, erroMaximo);
-
 }
 
+/*
+void *Integrar (void *tid) {
+
+    while(posicao != 0) {
+        //TODO: Verificar a corretude do controle de exclusão mútua
+        pthread_mutex_lock(&mutex);
+        calculaRetangulos(Buffer[posicao]);
+        pthread_mutex_unlock(&mutex);
+    }
+    
+    free(tid);
+    pthread_exit(NULL);
+}
+*/
+
+//TODO: Verificar a corretude do PUSH e POP na pilha, bem como o controle de sincronização
+void calculaRetangulos(Dados retangulo) {
+    //pop(1);
+    double pontoMedio = (retangulo.a + retangulo.b)/2.0;
+    double areaMaior = (retangulo.b - retangulo.a) * retangulo.f(pontoMedio);
+    double areaRetanguloEsquerda = ((pontoMedio - retangulo.a) * retangulo.f(pontoMedio));
+    double areaRetanguloDireita = ((retangulo.b - pontoMedio) * retangulo.f(pontoMedio));
+    double erro = areaMaior - (areaRetanguloEsquerda + areaRetanguloDireita);
+
+    if(abs(erro) > erroMaximo) {
+        pthread_mutex_lock(&mutex1);
+        Buffer[posicao + 1] = inicializaRetangulo(retangulo.a, pontoMedio, retangulo.f);
+        Buffer[posicao + 2] = inicializaRetangulo(pontoMedio, retangulo.b, retangulo.f);
+        pthread_mutex_unlock(&mutex1);
+    //    push(2);
+    }
+    else {
+        pthread_mutex_lock(&mutex2);
+        valorIntegral += areaMaior;
+        pthread_mutex_unlock(&mutex2);
+    }
+}
+
+void defineErroMaximo(double erro) {
+    erroMaximo = erro;
+}
+
+//TODO: Avaliar a necessidade do MUTEX
+void push(int n) {
+    pthread_mutex_lock(&mutex3);
+    posicao++;
+    pthread_mutex_unlock(&mutex3);
+}
+
+//TODO: Avaliar a necessidade do MUTEX
+void pop(int n) {
+    pthread_mutex_lock(&mutex4);
+    posicao--;
+    pthread_mutex_unlock(&mutex4);
+}
