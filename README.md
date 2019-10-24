@@ -6,13 +6,13 @@ Data:
 
 1.Descrição do problema
 
-  O trabalho consiste em implementar o método de integração numérica retangular usando a estratégia de quadratura adaptiva para
+  O trabalho consiste em implementar o método de integração numérica retangular usando a estratégia de quadratura adaptativa para
   definir o subintervalos de forma dinâmica. O programa possui duas versões: sequencial e paralela, onde na versão concorrente 
-  deve-se garantir a solução com balancemento de carga entre as threads, objetivando um desempenho máximo.
+  deve-se garantir a solução com balanceamento de carga entre as threads, objetivando um desempenho máximo.
 
 2.Solução do problema
 
-  É criado um programa que calcula a integral definida de uma função não trivial pelo método de integração numérica do ponto médio. A   entrada é um conjunto de funções f(x) definidas no intervalo [a, b]. O programa de forma recursiva vai subdivide este intervalo passado na entrada do programa em subintervalos e faz o somatório do cálculo da integral de cada subintervalo resultando na integral total para o intervalo [a,b]. O programa checa se o erro do resultado obtido por esta abordagem está dentro do limite máximo do erro tolerado passado pela entrada. Caso não esteja, ele subdivide novamente o intervalo em mais subintervalos chama a função novamente. O loop só acaba quando o erro da função for inferior ao solicitado na entrada.
+  É criado um programa que calcula a integral definida de uma função não trivial pelo método de integração numérica do ponto médio. A   entrada é um conjunto de funções do tipo f(x) definidas no intervalo [a, b]. O programa de forma recursiva subdivide o intervalo passado na entrada do programa em subintervalos, no formato de retângulos.  e faz o somatório do cálculo da integral de cada subintervalo resultando na integral total para o intervalo [a,b]. O programa checa se o erro do resultado obtido por esta abordagem está dentro do limite máximo do erro tolerado passado pela entrada. Caso não esteja, ele subdivide novamente o intervalo em mais subintervalos, retângulos e chama a função novamente. A condição de parada é o erro da função ser inferior ao erro máximo tolerado passado na entrada do programa.
 
 3.Avaliação de desempenho: Sequencial x Paralelo
 
@@ -30,6 +30,13 @@ Data:
  * f) f(x) = cos(exp[-x]) * x
  * g) f(x) = cos(exp[-x]) * (0.005 * x^3 + 1)
 
+  O programa na versão sequencial (mainseq.c) foi compilado da seguinte forma: gcc mainseq.c -o programa -lm . 
+  
+  Os testes para versão sequencial tiveram os respectivos valores para o intervalo [a,b] e o erro máximo.
+  
+  
+  
+  
 5.Modularidade do programa //NÃO IMPLEMENTADO
 
   A fim de permitir uma maior clareza ao programa, o mesmo foi modularizado da seguinte forma: main.c, implementacao.c, protótipo.h e
