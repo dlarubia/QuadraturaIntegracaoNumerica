@@ -15,7 +15,7 @@ void recebe_nthreads() {
 }
 
 //TODO: Conferir qual é o retorno da função que será passada
-void cria_threads(double (*f)(double)) {
+void cria_threads(void *f) {
     tid_sistema = (pthread_t *) malloc(sizeof(pthread_t) * nthreads);
     if(tid_sistema == NULL) {
         printf("--ERRO: malloc('aloca espaço para vetor de identificadores das threads')\n");
