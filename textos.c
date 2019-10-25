@@ -1,3 +1,12 @@
+/**
+ * Trabalho 1 - Computação Concorrente
+ * Professora Silvana Rossetto
+ * Período 2019.2
+ * Autores: Daniel La Rubia e Paula Macedo
+ * 
+ * Descrição do arquivo: Contém os textos que deverão ser exibidos pelo menu do programa, bem como o próprio menu formatado.
+*/
+
 void textoDescricao() {
     printf("COMPREENDA O PROBLEMA\n\nO trabalho consiste em implementar o método de integração numérica retangular usando a estratégia de quadratura adaptiva para definir o subintervalos de forma dinâmica. O programa possui duas versões: sequencial e paralela, onde na versão concorrente deve-se garantir a solução com balancemento de carga entre as threads, objetivando um desempenho máximo.\n");
 }

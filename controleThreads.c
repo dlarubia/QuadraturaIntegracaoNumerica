@@ -1,3 +1,12 @@
+/**
+ * Trabalho 1 - Computação Concorrente
+ * Professora Silvana Rossetto
+ * Período 2019.2
+ * Autores: Daniel La Rubia e Paula Macedo
+ * 
+ * Descrição do arquivo: Arquivo responsável por realizar o gerenciamento de threads do programa.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>

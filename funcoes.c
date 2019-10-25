@@ -1,4 +1,11 @@
-/*
+/**
+ * Trabalho 1 - Computação Concorrente
+ * Professora Silvana Rossetto
+ * Período 2019.2
+ * Autores: Daniel La Rubia e Paula Macedo
+ * 
+ * Descrição do arquivo: Contém a implementação das funções que deverão ser calculadas pelo algoritmo.
+
  * Funções que devem ser calculadas:
  * a(x) = 1 + x
  * b(x) = sqrt(1 - x²), -1 < x < 1
@@ -7,7 +14,6 @@
  * f(x) = cos(e^-x)
  * g(x) = cos(e^-x) * x
  * h(x) = cos(e^-x) * (0.005 * x³ + 1)
- * 
 */
 
 #include <stdio.h>
