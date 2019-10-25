@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <math.h>
+#include "controleThreads.c"
 
 #define N 1024
 
@@ -32,9 +33,10 @@ typedef struct Dados {
 } Dados;
 
 Dados Buffer[N];
-double erroMaximo, valorIntegral = 0;
+double intervalo_a, intervalo_b, erroMaximo, valorIntegral = 0;
 int topo = -1;
 pthread_mutex_t mutex, mutex1;
+
 
 Dados inicializaRetangulo(double a, double b, double (*f)(double)) {
     Dados retangulo;
@@ -51,23 +53,23 @@ double calculaAreaRetangulo(double a, double b, double (*f)(double)) {
 }
 
 
-double integralRecursiva(double (*f)(double), double a, double b, double tolerancia) {
+double integralRecursiva(double (*f)(double), double a, double b) {
     double areaMaior = calculaAreaRetangulo(a, b, f);
     double areaEsquerda = calculaAreaRetangulo(a, (a+b)/2.0, f);
     double areaDireita = calculaAreaRetangulo((a+b)/2.0, b, f);
 
-    if(fabs(areaMaior - areaEsquerda - areaDireita) > tolerancia) {
-        return integralRecursiva(f, a, (a+b)/2, tolerancia) + integralRecursiva(f, (a+b)/2, b, tolerancia);
+    if(fabs(areaMaior - areaEsquerda - areaDireita) > erroMaximo) {
+        return integralRecursiva(f, a, (a+b)/2) + integralRecursiva(f, (a+b)/2, b);
     }
 
     return areaMaior;
 }
 
-
+/*
 void defineErroMaximo(double erro) {
     erroMaximo = erro;
 }
-
+*/
 
 void push(int n) {
     topo += n;
@@ -124,11 +126,37 @@ void calculaRetangulos(Dados retangulo) {
 
 void *Integrar (void *tid) {
     int id = *(int*) tid;
+    int contador = 0;
     pthread_mutex_lock(&mutex);
     while(topo != -1) {
         calculaRetangulos(Buffer[topo]);
+        contador++;
     }
     pthread_mutex_unlock(&mutex);
     free(tid);
     pthread_exit(NULL);
+}
+
+double integralConcorrente(double (*f)(double), double a, double b) {
+    valorIntegral = 0;
+	preenchePilhaInicial(nthreads, a, b, f);
+	cria_threads(Integrar);
+	aguarda_encerramento_threads();
+	return valorIntegral;
+}
+
+void recebeParametros() {
+    printf("Insira o valor inicial (a), sabendo que o intervalo vai de a -> b: ");
+	scanf("%lf", &intervalo_a);
+	printf("Insira o valor final (b): ");
+	scanf("%lf", &intervalo_b);
+	printf("Digite o valor de erro tolerado: ");
+	scanf("%lf", &erroMaximo);
+}
+
+void limpaLixo() {
+    intervalo_a = 0;
+    intervalo_b = 0;
+    erroMaximo = 0;
+    valorIntegral = 0;
 }

@@ -11,97 +11,102 @@ Autores: Daniel La Rubia e Paula Macedo
 #include <stdlib.h>
 #include "quadraturaAlgorithm.c"
 #include "funcoes.c"
-#include "controleThreads.c"
+#include "textos.c"
 
 int main () {
 	int opcao;
-	
-	printf(" |--------------------------------------------------------------------|\n \
-|                Problema da Quadratura numérica                     |\n \
-|                                                                    |\n \
-| Selecione a opção desejada:                                        |\n \
-|     1 - Compreenda o problema                                      |\n \
-|     2 - Sobre a implementação                                      |\n \
-|     3 - Execução do Programa implementado de forma Sequencial      |\n \
-|     4 - Execução do Programa implementado de forma Concorrente     |\n \
-|     5 - Descrição do Trabalho                                      |\n \
-|--------------------------------------------------------------------|\n");
+
+	exibeMenu();
 	scanf("%d", &opcao);
+	system("clear");
 	
-	do {
+	while(opcao != 9) {
+		system("clear");
 		switch (opcao) {
 			
 			case 0:
 			//TODO
-				printf("MENU PRINCIPAL \n 1\n 2\n 3\n 4\n 5\n");
-				printf("RESULTADOS SEQUENCIAL: \n");
-				printf("VALOR INTEGRAL a(x): %f\n", integralRecursiva(a, 1, 4, 0.01));
-				printf("VALOR INTEGRAL b(x): %f\n", integralRecursiva(b, 1, 4, 0.0001));
-				printf("VALOR INTEGRAL c(x): %f\n", integralRecursiva(c, 1, 4, 0.00000000001));
-				printf("VALOR INTEGRAL d(x): %f\n", integralRecursiva(d, 1, 4, 0.0001));
-				printf("VALOR INTEGRAL e(x): %f\n", integralRecursiva(e, 1, 4, 0.0001));
-				printf("VALOR INTEGRAL f(x): %f\n", integralRecursiva(f, 1, 4, 0.00000000001));
-				printf("VALOR INTEGRAL g(x): %f\n", integralRecursiva(g, 1, 4, 0.0001));
-				printf("RESULTADOS CONCORRENTE: \n");
-				defineErroMaximo(0.00000000001);
-				recebe_nthreads();
-				preenchePilhaInicial(nthreads, 1, 4, f);
-				cria_threads(Integrar);
-				aguarda_encerramento_threads();
-				printf("posicao = %d\n", topo);
-				printf("Resultado: %f\n", valorIntegral);
-				valorIntegral = 0;
-				//printf("VALOR INTEGRAL MÉTODO LEO: %f\n", integralPontoMedio2(a, 1, 2, 4));
+				exibeMenu();
 				scanf("%d", &opcao);
 				break;
 			
 			case 1:
 			//TODO
-				printf("Descrição\n");
-				printf("Digite 0 para retornar ao menu ou 9 para encerrar a aplicação.\n");
+				textoDescricao();
+				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
+				system("clear");
 				break;
 
 			case 2:
 			//TODO
-				printf("Descrição\n");
-				printf("Digite 0 para retornar ao menu ou 9 para encerrar a aplicação.\n");
+				textoImplementacao();
+				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
 				break;
 			
 			case 3:
 			//TODO
-				printf("Descrição\n");
-				printf("Digite 0 para retornar ao menu ou 9 para encerrar a aplicação.\n");
+				recebeParametros();
+
+				printf("\n\nRESULTADOS DO PROGRAMA SEQUENCIAL: \n\n");
+				printf("Integral de a(x) = 1 + x ==> %f\n", integralRecursiva(a, intervalo_a, intervalo_b));
+				printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralRecursiva(b, intervalo_a, intervalo_b));
+				printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralRecursiva(c, intervalo_a, intervalo_b));
+				printf("Integral de d(x) = sen(x²) ==> %f\n", integralRecursiva(d, intervalo_a, intervalo_b));
+				printf("Integral de e(x) = cos(e^-x) ==> %f\n", integralRecursiva(e, intervalo_a, intervalo_b));
+				printf("Integral de f(x) = cos(e^-x) * x ==> %f\n", integralRecursiva(f, intervalo_a, intervalo_b));
+				printf("Integral de g(x) = cos(e^-x) * (0.005 * cos(x³) + 1) ==> %f\n", integralRecursiva(g, intervalo_a, intervalo_b));
+				limpaLixo();
+				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
+				system("clear");
 				break;
 			
 			case 4:
 			//TODO 
-				printf("Descrição\n");
-				printf("Digite 0 para retornar ao menu ou 9 para encerrar a aplicação.\n");
+				recebeNTHREADS();
+				recebeParametros();
+
+				printf("\n\nRESULTADOS CONCORRENTE: \n\n");
+				printf("Integral de a(x) = 1 + x ==> %f\n", integralConcorrente(a, intervalo_a, intervalo_b));
+				printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralConcorrente(b, intervalo_a, intervalo_b));
+				printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralConcorrente(c, intervalo_a, intervalo_b));
+				printf("Integral de d(x) = sen(x²) ==> %f\n", integralConcorrente(d, intervalo_a, intervalo_b));
+				printf("Integral de e(x) = cos(e^-x) ==> %f\n", integralConcorrente(e, intervalo_a, intervalo_b));
+				printf("Integral de f(x) = cos(e^-x) * x ==> %f\n", integralConcorrente(f, intervalo_a, intervalo_b));
+				printf("Integral de g(x) = cos(e^-x) * (0.005 * cos(x³) + 1) ==> %f\n", integralConcorrente(g, intervalo_a, intervalo_b));
+				limpaLixo();
+				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
+				system("clear");
 				break;
 			
 			case 5:
-			//TODO
-				printf("Descrição\n");
-				printf("Digite 0 para retornar ao menu ou 9 para encerrar a aplicação.\n");
+				recebeNTHREADS();
+				recebeParametros();
+				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
+				system("clear");
 				break;
 			
-			case 9:
+			case 6:
 			//TODO
+				textoInfoGrupo();
+				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
+				scanf("%d", &opcao);
+				system("clear");
 				break;
 			
 			default:
 			//TODO
 				printf("Opção inválida.\n");
-				printf("Digite 0 para retornar ao menu ou 9 para encerrar a aplicação.\n");
+				printf("\n *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n\n");
 				scanf("%d", &opcao);
+				system("clear");
 				break;
 		}
-	} while (opcao != 9);
+	}
 
 	return 0;
 }

@@ -5,7 +5,7 @@
 pthread_t *tid_sistema;
 int nthreads = 0, t, *tid;
 
-void recebe_nthreads() {
+void recebeNTHREADS() {
     do {
         printf("Digite o número de threads que deseja utilizar (1 a 8): ");
         scanf("%d", &nthreads);
