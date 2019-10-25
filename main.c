@@ -14,6 +14,7 @@ Autores: Daniel La Rubia e Paula Macedo
 #include "textos.c"
 #include "timer.h"
 
+
 double inicio, fim, inicioGlobal, fimGlobal;
 void execucaoComparativa();
 void execucaoSequencial();
@@ -32,13 +33,11 @@ int main () {
 		switch (opcao) {
 			
 			case 0:
-			//TODO
 				exibeMenu();
 				scanf("%d", &opcao);
 				break;
 			
 			case 1:
-			//TODO
 				textoDescricao();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
@@ -46,18 +45,14 @@ int main () {
 				break;
 
 			case 2:
-			//TODO
 				textoImplementacao();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
 				break;
 			
 			case 3:
-			//TODO
 				recebeParametros();
-
-				execucaoSequencial();
-				
+				execucaoSequencial();	
 				limpaLixo();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
@@ -65,12 +60,9 @@ int main () {
 				break;
 			
 			case 4:
-			//TODO 
 				recebeNTHREADS();
 				recebeParametros();
-
-				execucaoConcorrente();
-				
+				execucaoConcorrente();			
 				limpaLixo();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
@@ -81,13 +73,13 @@ int main () {
 				recebeNTHREADS();
 				recebeParametros();
 				execucaoComparativa();
+				limpaLixo();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
 				system("clear");
 				break;
 			
 			case 6:
-			//TODO
 				textoInfoGrupo();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
@@ -95,7 +87,6 @@ int main () {
 				break;
 			
 			default:
-			//TODO
 				printf("Opção inválida.\n");
 				printf("\n *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n\n");
 				scanf("%d", &opcao);
@@ -109,6 +100,7 @@ int main () {
 
 
 void execucaoSequencial() {
+
 	printf("\n\nRESULTADOS DO PROGRAMA SEQUENCIAL: \n\n");
 	GET_TIME(inicioGlobal);
 	
@@ -149,12 +141,11 @@ void execucaoSequencial() {
 
 	GET_TIME(fimGlobal);
 	printf("Tempo necessário para o cálculo de todas as funções: %f\n\n", fimGlobal - inicioGlobal);
-
-
 }
 
 
 void execucaoConcorrente() {
+
 	printf("\n\nRESULTADOS CONCORRENTE: \n\n");
 	GET_TIME(inicioGlobal);
 	
@@ -199,7 +190,7 @@ void execucaoConcorrente() {
 
 
 void execucaoComparativa() {
-
+	
 	printf("\n      --- Integral de a(x) = 1 + x ---\n\n");
 	GET_TIME(inicio);
 	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(a, intervalo_a, intervalo_b));
@@ -269,5 +260,4 @@ void execucaoComparativa() {
 	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(g, intervalo_a, intervalo_b));
 	GET_TIME(fim);
 	printf("Tempo necessário: %f\n\n", fim - inicio);
-
 }
