@@ -66,12 +66,18 @@ double integralPontoMedio2(double (*f)(double), double a, double b, int iteracoe
     return passo * integral;
 }
 
+
+double calculaAreaRetangulo(double a, double b, double (*f)(double)) {
+    return (b - a) * f((a + b) / 2.0);
+}
+
+
 double integralPontoMedioRecursivo(double (*f)(double), double a, double b, double erroMaximo) {
-    double pontoMedio = (a + b)/2.0;
-    double areaMaior = (b - a) * f(pontoMedio);
-    double retanguloL = ((pontoMedio - a) * f(pontoMedio));
-    double retanguloR = ((b - pontoMedio) * f(pontoMedio));
-    double erro = areaMaior - (retanguloL + retanguloR);
+    
+    double areaMaior = calculaAreaRetangulo(a, b, f);
+    double areaRetanguloEsquerda = calculaAreaRetangulo(a, (a+b)/2, f);
+    double areaRetanguloDireita = calculaAreaRetangulo((a+b)/2, b, f);
+    double erro = areaMaior - (areaRetanguloEsquerda + areaRetanguloDireita);
 
     if(abs(erro) <= erroMaximo) return areaMaior;
     else return integralPontoMedio(f, a, (a + b)/2.0, erroMaximo) + integralPontoMedio(f, (b + a)/2.0, b, erroMaximo);
@@ -93,46 +99,34 @@ void pop(int n) {
 }
 
 void preenchePilhaInicial(int nthreads, double a, double b, double (*f)(double)) {
-    printf("Vou preencher a pilha\n");
     double espacamento = (b - a) / nthreads;
 
     for (int i = 0; i < nthreads; i++) {
-        printf("Preenchendo a pilha %d!!\n", i);
         Buffer[i] = inicializaRetangulo(a + i * espacamento, (a + i * espacamento) + espacamento, f);
         push(1);
     }
 }
 
-
 //TODO: Verificar a corretude do PUSH e POP na pilha, bem como o controle de sincronização
 void calculaRetangulos(Dados retangulo) {
     pop(1);
-    double pontoMedio = (retangulo.a + retangulo.b)/2.0;
-    double areaMaior = (retangulo.b - retangulo.a) * retangulo.f(pontoMedio);
-    double areaRetanguloEsquerda = ((pontoMedio - retangulo.a) * retangulo.f(pontoMedio));
-    double areaRetanguloDireita = ((retangulo.b - pontoMedio) * retangulo.f(pontoMedio));
-    double erro = areaMaior - (areaRetanguloEsquerda + areaRetanguloDireita);
-
-    printf("PontoMedio = %f\n", pontoMedio);
-    printf("areaMaior = %f\n", areaMaior);
-    printf("areaRetanguloEsquerda = %f\n", areaRetanguloEsquerda);
-    printf("areaRetanguloDireita = %f\n", areaRetanguloDireita);
-    printf("erro = %f\n", erro);
-
     pthread_mutex_unlock(&mutex);
+
+    double a = retangulo.a, b = retangulo.b;
+    double pontoMedio = (a + b)/2.0;
+    double areaMaior = calculaAreaRetangulo(a, b, retangulo.f);
+    double areaRetanguloEsquerda = calculaAreaRetangulo(a, pontoMedio, retangulo.f);
+    double areaRetanguloDireita = calculaAreaRetangulo(pontoMedio, b, retangulo.f);
+    double erro = areaMaior - (areaRetanguloEsquerda + areaRetanguloDireita);
 
     if(abs(erro) > erroMaximo) {
         pthread_mutex_lock(&mutex);
-        printf("Posicao = %d\n", posicao);
         Buffer[posicao + 1] = inicializaRetangulo(retangulo.a, pontoMedio, retangulo.f);
-        printf("Posicao + 1 = %d", posicao + 1);
         Buffer[posicao + 2] = inicializaRetangulo(pontoMedio, retangulo.b, retangulo.f);
-        printf("Posicao + 1 = %d", posicao + 2);
         push(2);
         pthread_mutex_unlock(&mutex);
     }
     else {
-        printf("Eu cheguei no else\n");
         pthread_mutex_lock(&mutex1);
         valorIntegral += areaMaior;
         pthread_mutex_unlock(&mutex1);
@@ -144,18 +138,11 @@ void calculaRetangulos(Dados retangulo) {
 
 void *Integrar (void *tid) {
     int id = *(int*) tid;
-    printf("Eu to rodando!!! \n");
-    printf("posicao = %d\n", posicao);
-    printf("tid: %d\n", id);
     pthread_mutex_lock(&mutex);
     while(posicao != -1) {
-        printf("tid: %d\n", id);
-        //TODO: Verificar a corretude do controle de exclusão mútua  
         calculaRetangulos(Buffer[posicao]);
     }
     pthread_mutex_unlock(&mutex);
-    printf("A THREAD NÚMERO %d ACABOU COM CERTEZA!!!!\n", id);
-    posicao = -1;
     free(tid);
     pthread_exit(NULL);
 }

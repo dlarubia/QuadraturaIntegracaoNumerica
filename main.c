@@ -35,16 +35,17 @@ int main () {
 			//TODO
 				printf("MENU PRINCIPAL \n 1\n 2\n 3\n 4\n 5\n");
 				printf("RESULTADOS SEQUENCIAL: \n");
-				printf("VALOR INTEGRAL a(x): %f\n", integralPontoMedioRecursivo(a, 1, 4, 100000));
-				printf("VALOR INTEGRAL b(x): %f\n", integralPontoMedioRecursivo(b, -1, 1, 10000));
-				printf("VALOR INTEGRAL c(x): %f\n", integralPontoMedioRecursivo(c, 1, 4, 1));
-				printf("VALOR INTEGRAL d(x): %f\n", integralPontoMedioRecursivo(d, 1, 4, 1));
-				printf("VALOR INTEGRAL e(x): %f\n", integralPontoMedioRecursivo(e, 1, 4, 1));
-				printf("VALOR INTEGRAL f(x): %f\n", integralPontoMedioRecursivo(f, 1, 4, 1));
-				printf("VALOR INTEGRAL g(x): %f\n", integralPontoMedioRecursivo(g, 1, 4, 1));
+				printf("VALOR INTEGRAL a(x): %f\n", integralPontoMedioRecursivo(a, 1, 4, 0.0000001));
+				printf("VALOR INTEGRAL b(x): %f\n", integralPontoMedioRecursivo(b, 1, 4, 0.00001));
+				printf("VALOR INTEGRAL c(x): %f\n", integralPontoMedioRecursivo(c, 1, 4, 0.0000001));
+				printf("VALOR INTEGRAL d(x): %f\n", integralPontoMedioRecursivo(d, 1, 4, 0.0000001));
+				printf("VALOR INTEGRAL e(x): %f\n", integralPontoMedioRecursivo(e, 1, 4, 0.0000001));
+				printf("VALOR INTEGRAL f(x): %f\n", integralPontoMedioRecursivo(f, 1, 4, 0.0000001));
+				printf("VALOR INTEGRAL g(x): %f\n", integralPontoMedioRecursivo(g, 1, 4, 0.0000001));
 				printf("RESULTADOS CONCORRENTE: \n");
+				defineErroMaximo(0.00000000001);
 				recebe_nthreads();
-				preenchePilhaInicial(nthreads, -1, 1, b);
+				preenchePilhaInicial(nthreads, 1, 4, d);
 				cria_threads(Integrar);
 				aguarda_encerramento_threads();
 				printf("Resultado: %f\n", valorIntegral);
