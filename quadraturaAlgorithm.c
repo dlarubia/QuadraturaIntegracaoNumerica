@@ -65,11 +65,6 @@ double integralRecursiva(double (*f)(double), double a, double b) {
     return areaMaior;
 }
 
-/*
-void defineErroMaximo(double erro) {
-    erroMaximo = erro;
-}
-*/
 
 void push(int n) {
     topo += n;
@@ -80,7 +75,7 @@ void pop(int n) {
     topo -= n;
 }
 
-//O valor calculado varia de acordo com o número de threads por conta de como é feita a inicialização
+
 void preenchePilhaInicial(int nthreads, double a, double b, double (*f)(double)) {
     double espacamento = (b - a) / nthreads;
 
@@ -88,7 +83,6 @@ void preenchePilhaInicial(int nthreads, double a, double b, double (*f)(double))
         Buffer[i] = inicializaRetangulo(a + i * espacamento, (a + i * espacamento) + espacamento, f);
         push(1);
     }
-
     /* //Caso deseje verificar a que tanto o algoritmo sequencial quanto o concorrente geram o mesmo resultado, é necessário que se troque a inicialização da pilha
     Buffer[0] = inicializaRetangulo(a, b, f);
     push(1);
@@ -137,6 +131,7 @@ void *Integrar (void *tid) {
     pthread_exit(NULL);
 }
 
+
 double integralConcorrente(double (*f)(double), double a, double b) {
     valorIntegral = 0;
 	preenchePilhaInicial(nthreads, a, b, f);
@@ -144,6 +139,7 @@ double integralConcorrente(double (*f)(double), double a, double b) {
 	aguarda_encerramento_threads();
 	return valorIntegral;
 }
+
 
 void recebeParametros() {
     printf("Insira o valor inicial (a), sabendo que o intervalo vai de a -> b: ");
@@ -153,6 +149,7 @@ void recebeParametros() {
 	printf("Digite o valor de erro tolerado: ");
 	scanf("%lf", &erroMaximo);
 }
+
 
 void limpaLixo() {
     intervalo_a = 0;
