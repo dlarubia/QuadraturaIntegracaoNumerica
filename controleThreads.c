@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+
 pthread_t *tid_sistema;
 int nthreads = 0, t, *tid;
+
 
 void recebeNTHREADS() {
     do {
@@ -13,7 +15,7 @@ void recebeNTHREADS() {
     while( nthreads <= 0 || nthreads > 8);
 }
 
-//TODO: Conferir qual é o retorno da função que será passada
+
 void cria_threads(void *f) {
     tid_sistema = (pthread_t *) malloc(sizeof(pthread_t) * nthreads);
     if(tid_sistema == NULL) {
@@ -35,6 +37,7 @@ void cria_threads(void *f) {
         }
     }
 }
+
 
 void aguarda_encerramento_threads() {
     for(t = 0; t < nthreads; t++) {
