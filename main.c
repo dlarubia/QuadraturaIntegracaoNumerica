@@ -34,14 +34,20 @@ int main () {
 			case 0:
 			//TODO
 				printf("MENU PRINCIPAL \n 1\n 2\n 3\n 4\n 5\n");
-				printf("VALOR INTEGRAL a(x): %f\n", integralPontoMedioRecursivo(a, 1, 4, 1));
-				printf("VALOR INTEGRAL b(x): %f\n", integralPontoMedioRecursivo(b, 1, 4, 1));
+				printf("RESULTADOS SEQUENCIAL: \n");
+				printf("VALOR INTEGRAL a(x): %f\n", integralPontoMedioRecursivo(a, 1, 4, 100000));
+				printf("VALOR INTEGRAL b(x): %f\n", integralPontoMedioRecursivo(b, -1, 1, 10000));
 				printf("VALOR INTEGRAL c(x): %f\n", integralPontoMedioRecursivo(c, 1, 4, 1));
 				printf("VALOR INTEGRAL d(x): %f\n", integralPontoMedioRecursivo(d, 1, 4, 1));
 				printf("VALOR INTEGRAL e(x): %f\n", integralPontoMedioRecursivo(e, 1, 4, 1));
 				printf("VALOR INTEGRAL f(x): %f\n", integralPontoMedioRecursivo(f, 1, 4, 1));
 				printf("VALOR INTEGRAL g(x): %f\n", integralPontoMedioRecursivo(g, 1, 4, 1));
-
+				printf("RESULTADOS CONCORRENTE: \n");
+				recebe_nthreads();
+				preenchePilhaInicial(nthreads, -1, 1, b);
+				cria_threads(Integrar);
+				aguarda_encerramento_threads();
+				printf("Resultado: %f\n", valorIntegral);
 				//printf("VALOR INTEGRAL MÉTODO LEO: %f\n", integralPontoMedio2(a, 1, 2, 4));
 				scanf("%d", &opcao);
 				break;
