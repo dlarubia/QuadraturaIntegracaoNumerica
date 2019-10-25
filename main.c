@@ -12,9 +12,16 @@ Autores: Daniel La Rubia e Paula Macedo
 #include "quadraturaAlgorithm.c"
 #include "funcoes.c"
 #include "textos.c"
+#include "timer.h"
+
+double inicio, fim, inicioGlobal, fimGlobal;
+void execucaoComparativa();
+void execucaoSequencial();
+void execucaoConcorrente();
 
 int main () {
 	int opcao;
+	
 
 	exibeMenu();
 	scanf("%d", &opcao);
@@ -49,14 +56,8 @@ int main () {
 			//TODO
 				recebeParametros();
 
-				printf("\n\nRESULTADOS DO PROGRAMA SEQUENCIAL: \n\n");
-				printf("Integral de a(x) = 1 + x ==> %f\n", integralRecursiva(a, intervalo_a, intervalo_b));
-				printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralRecursiva(b, intervalo_a, intervalo_b));
-				printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralRecursiva(c, intervalo_a, intervalo_b));
-				printf("Integral de d(x) = sen(x²) ==> %f\n", integralRecursiva(d, intervalo_a, intervalo_b));
-				printf("Integral de e(x) = cos(e^-x) ==> %f\n", integralRecursiva(e, intervalo_a, intervalo_b));
-				printf("Integral de f(x) = cos(e^-x) * x ==> %f\n", integralRecursiva(f, intervalo_a, intervalo_b));
-				printf("Integral de g(x) = cos(e^-x) * (0.005 * cos(x³) + 1) ==> %f\n", integralRecursiva(g, intervalo_a, intervalo_b));
+				execucaoSequencial();
+				
 				limpaLixo();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
@@ -68,14 +69,8 @@ int main () {
 				recebeNTHREADS();
 				recebeParametros();
 
-				printf("\n\nRESULTADOS CONCORRENTE: \n\n");
-				printf("Integral de a(x) = 1 + x ==> %f\n", integralConcorrente(a, intervalo_a, intervalo_b));
-				printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralConcorrente(b, intervalo_a, intervalo_b));
-				printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralConcorrente(c, intervalo_a, intervalo_b));
-				printf("Integral de d(x) = sen(x²) ==> %f\n", integralConcorrente(d, intervalo_a, intervalo_b));
-				printf("Integral de e(x) = cos(e^-x) ==> %f\n", integralConcorrente(e, intervalo_a, intervalo_b));
-				printf("Integral de f(x) = cos(e^-x) * x ==> %f\n", integralConcorrente(f, intervalo_a, intervalo_b));
-				printf("Integral de g(x) = cos(e^-x) * (0.005 * cos(x³) + 1) ==> %f\n", integralConcorrente(g, intervalo_a, intervalo_b));
+				execucaoConcorrente();
+				
 				limpaLixo();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
@@ -85,6 +80,7 @@ int main () {
 			case 5:
 				recebeNTHREADS();
 				recebeParametros();
+				execucaoComparativa();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
 				system("clear");
@@ -109,4 +105,169 @@ int main () {
 	}
 
 	return 0;
+}
+
+
+void execucaoSequencial() {
+	printf("\n\nRESULTADOS DO PROGRAMA SEQUENCIAL: \n\n");
+	GET_TIME(inicioGlobal);
+	
+	GET_TIME(inicio);
+	printf("Integral de a(x) = 1 + x ==> %f\n", integralRecursiva(a, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+	
+	GET_TIME(inicio);
+	printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralRecursiva(b, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralRecursiva(c, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de d(x) = sen(x²) ==> %f\n", integralRecursiva(d, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de e(x) = cos(e^-x) ==> %f\n", integralRecursiva(e, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+	
+	GET_TIME(inicio);
+	printf("Integral de f(x) = cos(e^-x) * x ==> %f\n", integralRecursiva(f, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de g(x) = cos(e^-x) * (0.005 * cos(x³) + 1) ==> %f\n", integralRecursiva(g, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(fimGlobal);
+	printf("Tempo necessário para o cálculo de todas as funções: %f\n\n", fimGlobal - inicioGlobal);
+
+
+}
+
+
+void execucaoConcorrente() {
+	printf("\n\nRESULTADOS CONCORRENTE: \n\n");
+	GET_TIME(inicioGlobal);
+	
+	GET_TIME(inicio);
+	printf("Integral de a(x) = 1 + x ==> %f\n", integralConcorrente(a, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralConcorrente(b, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralConcorrente(c, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de d(x) = sen(x²) ==> %f\n", integralConcorrente(d, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de e(x) = cos(e^-x) ==> %f\n", integralConcorrente(e, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de f(x) = cos(e^-x) * x ==> %f\n", integralConcorrente(f, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de g(x) = cos(e^-x) * (0.005 * cos(x³) + 1) ==> %f\n", integralConcorrente(g, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(fimGlobal);
+	printf("Tempo necessário para o cálculo de todas as funções: %f\n\n", fimGlobal - inicioGlobal);
+}
+
+
+void execucaoComparativa() {
+
+	printf("\n      --- Integral de a(x) = 1 + x ---\n\n");
+	GET_TIME(inicio);
+	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(a, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n", fim - inicio);
+	GET_TIME(inicio);
+	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(a, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	printf("\n      --- Integral de b(x) = sqrt(1 - x²) ---\n\n");
+	GET_TIME(inicio);
+	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(b, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n", fim - inicio);
+	GET_TIME(inicio);
+	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(b, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	printf("\n      --- Integral de c(x) = sqrt(1 + x⁴) ---\n\n");
+	GET_TIME(inicio);
+	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(c, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n", fim - inicio);
+	GET_TIME(inicio);
+	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(c, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	printf("\n      --- Integral de d(x) = sen(x²) ---\n\n");
+	GET_TIME(inicio);
+	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(d, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n", fim - inicio);
+	GET_TIME(inicio);
+	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(d, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	printf("\n      --- Integral de e(x) = cos(e^-x) ---\n\n");
+	GET_TIME(inicio);
+	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(e, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n", fim - inicio);
+	GET_TIME(inicio);
+	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(e, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+	
+	printf("\n      --- Integral de f(x) = cos(e^-x) ---\n\n");
+	GET_TIME(inicio);
+	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(f, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n", fim - inicio);
+	GET_TIME(inicio);
+	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(f, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	printf("\n      --- Integral de g(x) = cos(e^-x) * (0.005 * cos(x³) + 1) ---\n\n");
+	GET_TIME(inicio);
+	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(g, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n", fim - inicio);
+	GET_TIME(inicio);
+	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(g, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
 }
