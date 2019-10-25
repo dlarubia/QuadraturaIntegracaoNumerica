@@ -33,7 +33,7 @@ typedef struct Dados {
 
 Dados Buffer[N];
 double erroMaximo, valorIntegral = 0;
-int posicao = -1;
+int topo = -1;
 pthread_mutex_t mutex, mutex1;
 
 Dados inicializaRetangulo(double a, double b, double (*f)(double)) {
@@ -70,15 +70,15 @@ void defineErroMaximo(double erro) {
 
 
 void push(int n) {
-    posicao++;
+    topo += n;
 }
 
 
 void pop(int n) {
-    posicao--;
+    topo -= n;
 }
 
-
+//O valor calculado varia de acordo com o número de threads por conta de como é feita a inicialização
 void preenchePilhaInicial(int nthreads, double a, double b, double (*f)(double)) {
     double espacamento = (b - a) / nthreads;
 
@@ -86,6 +86,11 @@ void preenchePilhaInicial(int nthreads, double a, double b, double (*f)(double))
         Buffer[i] = inicializaRetangulo(a + i * espacamento, (a + i * espacamento) + espacamento, f);
         push(1);
     }
+
+    /* //Caso deseje verificar a que tanto o algoritmo sequencial quanto o concorrente geram o mesmo resultado, é necessário que se troque a inicialização da pilha
+    Buffer[0] = inicializaRetangulo(a, b, f);
+    push(1);
+    */
 }
 
 
@@ -100,10 +105,10 @@ void calculaRetangulos(Dados retangulo) {
     double areaRetanguloDireita = calculaAreaRetangulo(pontoMedio, b, retangulo.f);
     double erro = areaMaior - (areaRetanguloEsquerda + areaRetanguloDireita);
 
-    if(abs(erro) > erroMaximo) {
+    if(fabs(erro) > erroMaximo) {
         pthread_mutex_lock(&mutex);
-        Buffer[posicao + 1] = inicializaRetangulo(retangulo.a, pontoMedio, retangulo.f);
-        Buffer[posicao + 2] = inicializaRetangulo(pontoMedio, retangulo.b, retangulo.f);
+        Buffer[topo + 1] = inicializaRetangulo(retangulo.a, pontoMedio, retangulo.f);
+        Buffer[topo + 2] = inicializaRetangulo(pontoMedio, retangulo.b, retangulo.f);
         push(2);
         pthread_mutex_unlock(&mutex);
     }
@@ -120,8 +125,8 @@ void calculaRetangulos(Dados retangulo) {
 void *Integrar (void *tid) {
     int id = *(int*) tid;
     pthread_mutex_lock(&mutex);
-    while(posicao != -1) {
-        calculaRetangulos(Buffer[posicao]);
+    while(topo != -1) {
+        calculaRetangulos(Buffer[topo]);
     }
     pthread_mutex_unlock(&mutex);
     free(tid);
