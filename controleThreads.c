@@ -20,7 +20,6 @@ void cria_threads(void *f) {
         printf("--ERRO: malloc('aloca espaço para vetor de identificadores das threads')\n");
         exit(-1);
     }
-    else printf("To criando a thread\n");
 
     for(t = 0; t < nthreads; t++) {
         tid = malloc(sizeof(int));
@@ -29,14 +28,11 @@ void cria_threads(void *f) {
             exit(-1);
         }
 
-        printf("To criando memo\n");
-
         *tid = t;
         if(pthread_create(&tid_sistema[t], NULL, f, (void*) tid)) {
             printf("--ERRO: pthread_create()\n");
             exit(-1);
         }
-        else printf("Criei a thread %d\n", t);
     }
 }
 
@@ -46,6 +42,5 @@ void aguarda_encerramento_threads() {
             printf("--ERRO: pthread_join()\n");
             exit(-1);
         }
-        else printf("Essas thread não termina caray -> %d\n", t);
     }
 }
