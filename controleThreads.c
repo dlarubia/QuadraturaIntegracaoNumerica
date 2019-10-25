@@ -10,7 +10,7 @@ void recebe_nthreads() {
         printf("Digite o número de threads que deseja utilizar (1 a 8): ");
         scanf("%d", &nthreads);
     }
-    while( 8 < nthreads <= 0);
+    while( nthreads <= 0 || nthreads > 8);
 }
 
 //TODO: Conferir qual é o retorno da função que será passada
@@ -20,6 +20,7 @@ void cria_threads(void *f) {
         printf("--ERRO: malloc('aloca espaço para vetor de identificadores das threads')\n");
         exit(-1);
     }
+    else printf("To criando a thread\n");
 
     for(t = 0; t < nthreads; t++) {
         tid = malloc(sizeof(int));
@@ -28,11 +29,14 @@ void cria_threads(void *f) {
             exit(-1);
         }
 
+        printf("To criando memo\n");
+
         *tid = t;
         if(pthread_create(&tid_sistema[t], NULL, f, (void*) tid)) {
             printf("--ERRO: pthread_create()\n");
             exit(-1);
         }
+        else printf("Criei a thread %d\n", t);
     }
 }
 
@@ -42,5 +46,6 @@ void aguarda_encerramento_threads() {
             printf("--ERRO: pthread_join()\n");
             exit(-1);
         }
+        else printf("Essas thread não termina caray -> %d\n", t);
     }
 }
