@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <math.h>
 
 #define N 1024
 
@@ -44,43 +45,22 @@ Dados inicializaRetangulo(double a, double b, double (*f)(double)) {
     return retangulo;
 }
 
-//TODO: Próximo passo é deixar de receber o parametro iteracoes e passar a controlar o término da função através do erro. Eliminar o for e tornar recursivo
-double integralPontoMedio(double (*f)(double), double a, double b, int iteracoes) {
-    double passo = (b - a) / iteracoes;
-    double integral = 0;
-    for(int i = 1; i <= iteracoes; i++) {
-        integral += passo * f(a + (i - 1) * passo);
-    }
-
-    return integral;
-}
-
-// Método do Leo
-double integralPontoMedio2(double (*f)(double), double a, double b, int iteracoes) {
-    double passo = (b - a) / iteracoes;
-    double integral = 0;
-    for(double i = a; i <= (b - passo); i+= passo) {
-        integral += f(i + passo/2.0);
-    }
-
-    return passo * integral;
-}
-
 
 double calculaAreaRetangulo(double a, double b, double (*f)(double)) {
     return (b - a) * f((a + b) / 2.0);
 }
 
 
-double integralPontoMedioRecursivo(double (*f)(double), double a, double b, double erroMaximo) {
-    
+double integralRecursiva(double (*f)(double), double a, double b, double tolerancia) {
     double areaMaior = calculaAreaRetangulo(a, b, f);
-    double areaRetanguloEsquerda = calculaAreaRetangulo(a, (a+b)/2, f);
-    double areaRetanguloDireita = calculaAreaRetangulo((a+b)/2, b, f);
-    double erro = areaMaior - (areaRetanguloEsquerda + areaRetanguloDireita);
+    double areaEsquerda = calculaAreaRetangulo(a, (a+b)/2.0, f);
+    double areaDireita = calculaAreaRetangulo((a+b)/2.0, b, f);
 
-    if(abs(erro) <= erroMaximo) return areaMaior;
-    else return integralPontoMedio(f, a, (a + b)/2.0, erroMaximo) + integralPontoMedio(f, (b + a)/2.0, b, erroMaximo);
+    if(fabs(areaMaior - areaEsquerda - areaDireita) > tolerancia) {
+        return integralRecursiva(f, a, (a+b)/2, tolerancia) + integralRecursiva(f, (a+b)/2, b, tolerancia);
+    }
+
+    return areaMaior;
 }
 
 
@@ -88,15 +68,16 @@ void defineErroMaximo(double erro) {
     erroMaximo = erro;
 }
 
-//TODO: Avaliar a necessidade do MUTEX
+
 void push(int n) {
     posicao++;
 }
 
-//TODO: Avaliar a necessidade do MUTEX
+
 void pop(int n) {
     posicao--;
 }
+
 
 void preenchePilhaInicial(int nthreads, double a, double b, double (*f)(double)) {
     double espacamento = (b - a) / nthreads;
@@ -107,7 +88,7 @@ void preenchePilhaInicial(int nthreads, double a, double b, double (*f)(double))
     }
 }
 
-//TODO: Verificar a corretude do PUSH e POP na pilha, bem como o controle de sincronização
+
 void calculaRetangulos(Dados retangulo) {
     pop(1);
     pthread_mutex_unlock(&mutex);
