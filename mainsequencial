@@ -11,22 +11,22 @@ Descrição: Implementação da versão sequencial do programa que utiliza o mé
 #include "quadraturaAlgorithm.c"
 
 
-int main (int argc, char** argv){
+// Variável para armazenar o tempo de execução
 
-// Variável para armazenar o tempo de execução 
-	clock_t tempo; 
+int main (int argc, char** argv){
 
 // O usuário deverá informar na linha de comando o intervalo [a,b] e o erro máximo e
 // Se não for passado o número correto de parâmetros, o programa se encerra
-	if(argc!=4) {
-		puts("Entre com intervalo [a, b] e o erro máximo tolerado na seguinte formatação : ./nome_programa a b e");
+	if(argc<4) {
+		puts("VERSÃO SEQUENCIAL:Entre com intervalo [a, b] e o erro máximo tolerado na seguinte formatação : ./nome_programa a b e");
+		//puts("VERSÃO PARALELA:Entre com intervalo [a, b],  o erro máximo tolerado e o número de threads na seguinte formatação : ./nome_programa a b e n");
 		return 1;
 	}
 // Variáveis do programa. Converte a string passada pela linha de comando para float
 	float intervaloA = atof(argv[1]);
 	float intervaloB = atof(argv[2]);
 	float erroMax = atof(argv[3]);
-	
+	//int numerothreads = atoi(argv[4]);
 
 //Calcula e imprime o resultado da integral pelo método do ponto médio
 	printf("VALOR INTEGRAL a(x): %lf\n", integralPontoMedio(a, intervaloA, intervaloB, erroMax));
