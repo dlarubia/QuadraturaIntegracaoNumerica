@@ -4,6 +4,8 @@ Primeiro trabalho de implementação da disciplina de Computação Concorrente, 
 Autores: Daniel La Rubia e Paula Macedo
 Data: 28/10/2019
 
+Relatório: https://docs.google.com/document/d/1a6lZX86-5Dj_pvYj_HjI8cOn4ny5BodpZish_KbDddw/edit?usp=sharing
+
 
 1.Descrição do problema
 
