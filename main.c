@@ -19,6 +19,7 @@ double inicio, fim, inicioGlobal, fimGlobal;
 void execucaoComparativa();
 void execucaoSequencial();
 void execucaoConcorrente();
+void execucaoConcorrenteDesbalanceada();
 
 int main () {
 	int opcao;
@@ -54,7 +55,7 @@ int main () {
 				recebeParametros();
 				execucaoSequencial();	
 				limpaLixo();
-				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
+				printf("\n      *** Digite 0 para exibir o menu, 3 para repetir a operação ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
 				system("clear");
 				break;
@@ -64,22 +65,32 @@ int main () {
 				recebeParametros();
 				execucaoConcorrente();			
 				limpaLixo();
-				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
+				printf("\n      *** Digite 0 para exibir o menu, 4 para repetir a operação ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
 				system("clear");
 				break;
-			
+
 			case 5:
 				recebeNTHREADS();
 				recebeParametros();
-				execucaoComparativa();
+				execucaoConcorrenteDesbalanceada();			
 				limpaLixo();
-				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
+				printf("\n      *** Digite 0 para exibir o menu, 5 para repetir a operação ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
 				system("clear");
 				break;
 			
 			case 6:
+				recebeNTHREADS();
+				recebeParametros();
+				execucaoComparativa();
+				limpaLixo();
+				printf("\n      *** Digite 0 para exibir o menu, 6 para repetir a operação ou 9 para encerrar a aplicação ***\n");
+				scanf("%d", &opcao);
+				system("clear");
+				break;
+			
+			case 7:
 				textoInfoGrupo();
 				printf("\n      *** Digite 0 para exibir o menu ou 9 para encerrar a aplicação ***\n");
 				scanf("%d", &opcao);
@@ -109,11 +120,16 @@ void execucaoSequencial() {
 	GET_TIME(fim);
 	printf("Tempo necessário: %f\n\n", fim - inicio);
 	
+	if(intervalo_a < -1 || intervalo_b > 1) {
+		printf("A função b(x) = sqrt(1 - x²) só está definida no intervalo -1 < x < 1\n\n");
+	}
+	else {
 	GET_TIME(inicio);
 	printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralRecursiva(b, intervalo_a, intervalo_b));
 	GET_TIME(fim);
 	printf("Tempo necessário: %f\n\n", fim - inicio);
-
+	}
+	
 	GET_TIME(inicio);
 	printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralRecursiva(c, intervalo_a, intervalo_b));
 	GET_TIME(fim);
@@ -154,10 +170,15 @@ void execucaoConcorrente() {
 	GET_TIME(fim);
 	printf("Tempo necessário: %f\n\n", fim - inicio);
 
-	GET_TIME(inicio);
-	printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralConcorrente(b, intervalo_a, intervalo_b));
-	GET_TIME(fim);
-	printf("Tempo necessário: %f\n\n", fim - inicio);
+	if(intervalo_a < -1 || intervalo_b > 1) {
+		printf("A função b(x) = sqrt(1 - x²) só está definida no intervalo -1 < x < 1\n\n");
+	}
+	else {
+		GET_TIME(inicio);
+		printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralConcorrente(b, intervalo_a, intervalo_b));
+		GET_TIME(fim);
+		printf("Tempo necessário: %f\n\n", fim - inicio);
+	}
 
 	GET_TIME(inicio);
 	printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralConcorrente(c, intervalo_a, intervalo_b));
@@ -189,6 +210,56 @@ void execucaoConcorrente() {
 }
 
 
+void execucaoConcorrenteDesbalanceada() {
+
+	printf("\n\nRESULTADOS CONCORRENTE DESBALANCEADA RECURSIVA: \n\n");
+	GET_TIME(inicioGlobal);
+	
+	GET_TIME(inicio);
+	printf("Integral de a(x) = 1 + x ==> %f\n", integralConcorrenteDesbalanceadaRecursiva(a, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	if(intervalo_a < -1 || intervalo_b > 1) {
+		printf("A função b(x) = sqrt(1 - x²) só está definida no intervalo -1 < x < 1\n\n");
+	}
+	else {
+		GET_TIME(inicio);
+		printf("Integral de b(x) = sqrt(1 - x²) ==> %f\n", integralConcorrenteDesbalanceadaRecursiva(b, intervalo_a, intervalo_b));
+		GET_TIME(fim);
+		printf("Tempo necessário: %f\n\n", fim - inicio);
+	}
+
+	GET_TIME(inicio);
+	printf("Integral de c(x) = sqrt(1 + x⁴) ==> %f\n", integralConcorrenteDesbalanceadaRecursiva(c, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de d(x) = sen(x²) ==> %f\n", integralConcorrenteDesbalanceadaRecursiva(d, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de e(x) = cos(e^-x) ==> %f\n", integralConcorrenteDesbalanceadaRecursiva(e, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de f(x) = cos(e^-x) * x ==> %f\n", integralConcorrenteDesbalanceadaRecursiva(f, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(inicio);
+	printf("Integral de g(x) = cos(e^-x) * (0.005 * cos(x³) + 1) ==> %f\n", integralConcorrenteDesbalanceadaRecursiva(g, intervalo_a, intervalo_b));
+	GET_TIME(fim);
+	printf("Tempo necessário: %f\n\n", fim - inicio);
+
+	GET_TIME(fimGlobal);
+	printf("Tempo necessário para o cálculo de todas as funções: %f\n\n", fimGlobal - inicioGlobal);
+}
+
+
 void execucaoComparativa() {
 	
 	printf("\n      --- Integral de a(x) = 1 + x ---\n\n");
@@ -202,14 +273,19 @@ void execucaoComparativa() {
 	printf("Tempo necessário: %f\n\n", fim - inicio);
 
 	printf("\n      --- Integral de b(x) = sqrt(1 - x²) ---\n\n");
-	GET_TIME(inicio);
-	printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(b, intervalo_a, intervalo_b));
-	GET_TIME(fim);
-	printf("Tempo necessário: %f\n", fim - inicio);
-	GET_TIME(inicio);
-	printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(b, intervalo_a, intervalo_b));
-	GET_TIME(fim);
-	printf("Tempo necessário: %f\n\n", fim - inicio);
+	if(intervalo_a < -1 || intervalo_b > 1) {
+		printf("A função b(x) = sqrt(1 - x²) só está definida no intervalo -1 < x < 1\n\n");
+	}
+	else {
+		GET_TIME(inicio);
+		printf("Algoritmo SEQUENCIAL:  Resultado ==> %f   ---   ", integralRecursiva(b, intervalo_a, intervalo_b));
+		GET_TIME(fim);
+		printf("Tempo necessário: %f\n", fim - inicio);
+		GET_TIME(inicio);
+		printf("Algoritmo CONCORRENTE: Resultado ==> %f   ---   ", integralConcorrente(b, intervalo_a, intervalo_b));
+		GET_TIME(fim);
+		printf("Tempo necessário: %f\n\n", fim - inicio);
+	}
 
 	printf("\n      --- Integral de c(x) = sqrt(1 + x⁴) ---\n\n");
 	GET_TIME(inicio);

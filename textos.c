@@ -31,7 +31,8 @@ void exibeMenu() {
 |     2 - Sobre a implementação                                      |\n \
 |     3 - Execução do Programa implementado de forma Sequencial      |\n \
 |     4 - Execução do Programa implementado de forma Concorrente     |\n \
-|     5   Comparar programa sequencial e concorrente                 |\n \
-|     6 - Membros do grupo                                           |\n \
+|     5 - Execução alternativa: Solução Concorrente desbalanceada    |\n \
+|     6 - Comparar programa sequencial e concorrente                 |\n \
+|     7 - Membros do grupo                                           |\n \
 |--------------------------------------------------------------------|\n");
 }

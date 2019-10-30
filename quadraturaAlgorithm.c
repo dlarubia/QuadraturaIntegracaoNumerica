@@ -14,7 +14,7 @@
 #include <math.h>
 #include "controleThreads.c"
 
-#define N 1024
+#define N 102400
 
 typedef struct Dados {
     double a;
@@ -25,7 +25,7 @@ typedef struct Dados {
 Dados Buffer[N];
 double intervalo_a, intervalo_b, erroMaximo, valorIntegral = 0;
 int topo = -1;
-pthread_mutex_t mutex, mutex1;
+pthread_mutex_t mutex, mutex1, mutex2;
 
 
 Dados inicializaRetangulo(double a, double b, double (*f)(double)) {
@@ -47,8 +47,9 @@ double integralRecursiva(double (*f)(double), double a, double b) {
     double areaMaior = calculaAreaRetangulo(a, b, f);
     double areaEsquerda = calculaAreaRetangulo(a, (a+b)/2.0, f);
     double areaDireita = calculaAreaRetangulo((a+b)/2.0, b, f);
+    double erro = areaMaior - (areaDireita + areaEsquerda);
 
-    if(fabs(areaMaior - areaEsquerda - areaDireita) > erroMaximo) {
+    if(fabs(erro) > erroMaximo) {
         return integralRecursiva(f, a, (a+b)/2) + integralRecursiva(f, (a+b)/2, b);
     }
 
@@ -110,13 +111,22 @@ void calculaRetangulos(Dados retangulo) {
 
 void *Integrar (void *tid) {
     int id = *(int*) tid;
-    int contador = 0;
     pthread_mutex_lock(&mutex);
     while(topo != -1) {
         calculaRetangulos(Buffer[topo]);
-        contador++;
     }
     pthread_mutex_unlock(&mutex);
+    free(tid);
+    pthread_exit(NULL);
+}
+
+
+void *IntegrarDesbalanceada (void *tid) {
+    int id = *(int*) tid;
+    double resultadoIntegral = integralRecursiva(Buffer[id].f, Buffer[id].a, Buffer[id].b);
+    pthread_mutex_lock(&mutex2);
+    valorIntegral += resultadoIntegral;
+    pthread_mutex_unlock(&mutex2);
     free(tid);
     pthread_exit(NULL);
 }
@@ -128,6 +138,16 @@ double integralConcorrente(double (*f)(double), double a, double b) {
 	cria_threads(Integrar);
 	aguarda_encerramento_threads();
 	return valorIntegral;
+}
+
+
+double integralConcorrenteDesbalanceadaRecursiva(double (*f)(double), double a, double b) {
+    valorIntegral = 0;
+    preenchePilhaInicial(nthreads, a, b, f);
+    cria_threads(IntegrarDesbalanceada);
+    aguarda_encerramento_threads();
+    return valorIntegral;
+
 }
 
 
