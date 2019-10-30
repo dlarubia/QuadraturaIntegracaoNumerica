@@ -18,7 +18,7 @@ void textoImplementacao() {
 
 
 void textoInfoGrupo() {
-    printf("Trabalho 1 - Problema da Quadratura de Integração Numérica\nProfessora Silvana Rossetto\nPeríodo 2019/2\nAutores:\n * Daniel La Rubia -- DRE: 115033904\n * Paula Macedo -- DRE: XXXXXXXXX\n");
+    printf("Trabalho 1 - Problema da Quadratura de Integração Numérica\nProfessora Silvana Rossetto\nPeríodo 2019/2\nAutores:\n * Daniel La Rubia -- DRE: 115033904\n * Paula Macedo -- DRE: 113049909\n");
 }
 
 
