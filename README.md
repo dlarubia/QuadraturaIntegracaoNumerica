@@ -19,13 +19,12 @@ Foram implementados três algoritmos: Sequencial, Concorrente Balanceado e Conco
 
 Já no algoritmo de integração concorrente balanceado, foi utilizada uma pilha, onde as threads estariam funcionando como produtoras/consumidoras, consumindo o conjunto de dados armazenado no topo da pilha e realizando uma operação para verificar se o erro da área está no limite tolerado. Se não estiver, é realizado um push com os dois novos retângulos. A  fim de balancear o problema, é realizada uma carga inicial da pilha com N valores (número de threads).
 
-Link para relatório na íntegra => https://docs.google.com/document/d/1a6lZX86-5Dj_pvYj_HjI8cOn4ny5BodpZish_KbDddw/edit?usp=sharing
+
 
 3. Como compilar
 
 <p>
-O programa deve ser compilado da seguinte maneira: main.c -o main -lm - lpthread.</p>
-<p>
+O programa deve ser compilado da seguinte maneira: main.c -o main -lm - lpthread.<br>
 ./main</p>
 Após os comandos, aparecerá um menu e o usuário irá escolher as opções de execução, para por fim escolher os intervalos, erros e número de threads.
 
