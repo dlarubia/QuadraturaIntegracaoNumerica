@@ -21,6 +21,13 @@ Já no algoritmo de integração concorrente balanceado, foi utilizada uma pilha
 
 Link para relatório na íntegra => https://docs.google.com/document/d/1a6lZX86-5Dj_pvYj_HjI8cOn4ny5BodpZish_KbDddw/edit?usp=sharing
 
+3. Como compilar
+
+O programa deve ser compilado da seguinte maneira: main.c -o main -lm - lpthread.
+./main
+Após os comandos, aparecerá um menu e o usuário irá escolher as opções de execução, para por fim escolher os intervalos, erros e número de threads.
+
+
 
 
 
