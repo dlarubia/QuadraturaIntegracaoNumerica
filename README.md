@@ -23,8 +23,10 @@ Link para relatório na íntegra => https://docs.google.com/document/d/1a6lZX86-
 
 3. Como compilar
 
-O programa deve ser compilado da seguinte maneira: main.c -o main -lm - lpthread.
-./main
+<p>
+O programa deve ser compilado da seguinte maneira: main.c -o main -lm - lpthread.</p>
+<p>
+./main</p>
 Após os comandos, aparecerá um menu e o usuário irá escolher as opções de execução, para por fim escolher os intervalos, erros e número de threads.
 
 
